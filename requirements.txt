@@ -4,6 +4,5 @@ bcrypt
 python-dotenv
 Werkzeug
 Flask-Login
-bson
 Flask-Mail
 gunicorn
