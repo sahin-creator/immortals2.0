@@ -1,0 +1,296 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Appointment Approval</title>
+    <link rel="stylesheet" href="https://stackpath.bootstrapcdn.com/bootstrap/4.5.2/css/bootstrap.min.css">
+    <style>
+        .search-bar {
+            max-width: 600px;
+            margin: 0 auto;
+        }
+
+        .input-group .form-control,
+        .input-group .btn {
+            margin-right: 5px;
+        }
+
+        .btn-custom {
+            margin-right: 5px;
+        }
+
+        .table-responsive {
+            margin-top: 20px;
+        }
+
+        .btn-approve,
+        .btn-delete {
+            width: 100px;
+            color: white;
+        }
+
+        .btn-approve {
+            background-color: #28a745;
+            border-color: #28a745;
+        }
+
+        .btn-delete {
+            background-color: #dc3545;
+            border-color: #dc3545;
+        }
+
+        .btn-approve:hover,
+        .btn-delete:hover {
+            color: white;
+        }
+
+        .previous-day {
+            background-color: red;
+            color: white;
+        }
+    </style>
+</head>
+
+<body>
+    <div class="container mt-5">
+        <h2 class="text-center mb-4">Appointment Approval</h2>
+        <div class="row mb-4">
+            <div class="col-md-8 search-bar">
+                <div class="input-group">
+                    <input type="text" class="form-control" id="searchBar" placeholder="Search by Appointment ID...">
+                    <div class="input-group-append">
+                        <button class="btn btn-secondary" id="searchButton">Search</button>
+                    </div>
+                </div>
+            </div>
+            <div class="col-md-4 text-right">
+                <a href="/admin_dashboard" class="btn btn-primary">Go Back to Main Page</a>
+            </div>
+        </div>
+        <div class="row" id="searchResult" style="display: none;">
+            <div class="col-md-12">
+                <p id="searchMessage" class="alert alert-warning"></p>
+            </div>
+        </div>
+        <div class="table-responsive">
+            <table class="table table-bordered">
+                <thead class="thead-light">
+                    <tr>
+                        <th>Appointment ID</th>
+                        <th>Patient ID</th>
+                        <th>Doctor</th>
+                        <th>Appointment Date</th>
+                        <th>Time Slot</th>
+                        <th>Prescription</th>
+                        <th>Actions</th>
+                    </tr>
+                </thead>
+                <tbody id="appointmentTable">
+                    <!-- Rows will be populated dynamically -->
+                </tbody>
+            </table>
+        </div>
+
+        <!-- Doctor Filter Section -->
+        <h2 class="text-center mt-5 mb-4">Filter Doctors</h2>
+        <div class="row mb-4">
+            <div class="col-md-6">
+                <label for="doctorTypeFilter">Doctor Type</label>
+                <select class="form-control" id="doctorTypeFilter">
+                    <option value="Cancer">Cancer</option>
+                    <option value="Gynecology">Gynecology</option>
+                    <option value="Medicine">Medicine</option>
+                    <option value="Dental">Dental</option>
+                </select>
+            </div>
+            <div class="col-md-6">
+                <label for="availableDateFilter">Available Date</label>
+                <input type="date" class="form-control" id="availableDateFilter">
+            </div>
+        </div>
+        <div class="row">
+            <div class="col-md-12 text-center">
+                <button class="btn btn-secondary" id="doctorSearchButton">Search Doctor</button>
+            </div>
+        </div>
+
+        <div class="table-responsive mt-4">
+            <table class="table table-bordered">
+                <thead class="thead-light">
+                    <tr>
+                        <th>Doctor ID</th>
+                        <th>Name</th>
+                        <th>Hospital</th>
+                        <th>State</th>
+                        <th>Type</th>
+                    </tr>
+                </thead>
+                <tbody id="doctorTable">
+                    <!-- Rows will be populated dynamically -->
+                </tbody>
+            </table>
+        </div>
+    </div>
+
+    <script>
+        document.getElementById('searchButton').addEventListener('click', function () {
+            var appointmentId = document.getElementById('searchBar').value;
+            fetch('/search_appointment/' + appointmentId)
+                .then(response => {
+                    if (!response.ok) {
+                        throw new Error('Appointment not found');
+                    }
+                    return response.json();
+                })
+                .then(data => {
+                    var tableBody = document.getElementById('appointmentTable');
+                    tableBody.innerHTML = ''; // Clear previous results
+
+                    if (data.message) {
+                        document.getElementById('searchMessage').innerText = data.message;
+                        document.getElementById('searchResult').style.display = 'block';
+                    } else {
+                        var row = document.createElement('tr');
+                        row.innerHTML = `
+                            <td>${data.appointment_id}</td>
+                            <td>${data.patient_id}</td>
+                            <td><input type="text" class="form-control" value="${data.doctor}" id="doctorIdInput"></td>
+                            <td><input type="date" class="form-control" value="${data.date}" id="appointmentDateInput"></td>
+                            <td>
+                                <select class="form-control" id="timeSlotSelect">
+                                    <option value="09:00-10:00">09:00-10:00</option>
+                                    <option value="10:00-11:00">10:00-11:00</option>
+                                    <option value="11:00-12:00">11:00-12:00</option>
+                                    <option value="13:00-14:00">13:00-14:00</option>
+                                    <option value="14:00-15:00">14:00-15:00</option>
+                                </select>
+                            </td>
+                            <td>
+                                ${data.document && data.document.prescription ? `<a href="data:application/octet-stream;base64,${data.document.prescription}" download="prescription">Download</a>` : 'No Prescription'}
+                            </td>
+                            <td>
+                                <div class="d-flex">
+                                    <button class="btn btn-approve btn-custom" onclick="approveAppointment('${data.appointment_id}')">Approve</button>
+                                    <button class="btn btn-delete btn-custom" onclick="deleteAppointment('${data.appointment_id}')">Delete</button>
+                                </div>
+                            </td>
+                        `;
+                        tableBody.appendChild(row);
+                        document.getElementById('searchResult').style.display = 'none';
+                    }
+                })
+                .catch(error => {
+                    document.getElementById('searchMessage').innerText = error.message;
+                    document.getElementById('searchResult').style.display = 'block';
+                });
+        });
+
+        document.getElementById('doctorSearchButton').addEventListener('click', function () {
+            var doctorType = document.getElementById('doctorTypeFilter').value;
+            var availableDate = document.getElementById('availableDateFilter').value;
+
+            var query = `/check_doctor?doctor_type=${doctorType}&available_date=${availableDate}`;
+
+            fetch(query)
+                .then(response => {
+                    if (!response.ok) {
+                        throw new Error('Doctor not found');
+                    }
+                    return response.json();
+                })
+                .then(data => {
+                    var tableBody = document.getElementById('doctorTable');
+                    tableBody.innerHTML = ''; // Clear previous results
+
+                    if (data.length === 0) {
+                        var row = document.createElement('tr');
+                        row.innerHTML = `<td colspan="5" class="text-center">No doctors found</td>`;
+                        tableBody.appendChild(row);
+                    } else {
+                        data.forEach(doctor => {
+                            var row = document.createElement('tr');
+                            row.innerHTML = `
+                        <td>${doctor.doctor_id}</td>
+                        <td>${doctor.name}</td>
+                        <td>${doctor.hospital}</td>
+                        <td>${doctor.state}</td>
+                        <td>${doctor.type}</td>
+                    `;
+                            tableBody.appendChild(row);
+                        });
+                    }
+                })
+                .catch(error => {
+                    var tableBody = document.getElementById('doctorTable');
+                    tableBody.innerHTML = `<tr><td colspan="5" class="text-center">${error.message}</td></tr>`;
+                });
+        });
+
+
+        // Setting date input to only allow next 7 days and highlight past dates
+        document.addEventListener('DOMContentLoaded', function () {
+            var dateInputs = document.querySelectorAll('input[type="date"]');
+            var today = new Date();
+            var maxDate = new Date();
+            maxDate.setDate(today.getDate() + 7);
+
+            var todayStr = today.toISOString().split('T')[0];
+            var maxDateStr = maxDate.toISOString().split('T')[0];
+
+            dateInputs.forEach(function (input) {
+                input.setAttribute('min', todayStr);
+                input.setAttribute('max', maxDateStr);
+            });
+
+            dateInputs.forEach(function (input) {
+                input.addEventListener('input', function () {
+                    var selectedDate = new Date(input.value);
+                    if (selectedDate < today) {
+                        input.classList.add('previous-day');
+                    } else {
+                        input.classList.remove('previous-day');
+                    }
+                });
+            });
+        });
+
+        function approveAppointment(appointmentId) {
+            var doctorId = document.getElementById('doctorIdInput').value;
+            var appointmentDate = document.getElementById('appointmentDateInput').value;
+            var timeSlot = document.getElementById('timeSlotSelect').value;
+
+            fetch('/approve_appointment', {
+                method: 'POST',
+                headers: {
+                    'Content-Type': 'application/json'
+                },
+                body: JSON.stringify({
+                    appointment_id: appointmentId,
+                    doctor_id: doctorId,
+                    appointment_date: appointmentDate,
+                    time_slot: timeSlot
+                })
+            })
+                .then(response => response.json())
+                .then(data => {
+                    alert(data.message);
+                    location.reload(); // Reload the page to reflect changes
+                });
+        }
+
+        function deleteAppointment(appointmentId) {
+            fetch('/delete_appointment/' + appointmentId, {
+                method: 'DELETE'
+            })
+                .then(response => response.json())
+                .then(data => {
+                    alert(data.message);
+                    location.reload(); // Reload the page to reflect changes
+                });
+        }
+    </script>
+</body>
+
+</html>

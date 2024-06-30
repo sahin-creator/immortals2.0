@@ -1,0 +1,686 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Immortal</title>
+  <!-- Bootstrap CSS -->
+  <link href="https://stackpath.bootstrapcdn.com/bootstrap/4.5.2/css/bootstrap.min.css" rel="stylesheet">
+  <!-- Font Awesome -->
+  <link href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/5.15.1/css/all.min.css" rel="stylesheet">
+  <script src="https://code.jquery.com/jquery-3.6.0.min.js"></script>
+  <!-- Custom CSS -->
+  <style>
+    .carousel-item img {
+      max-height: 450px;
+      /* Adjust the max-height as needed */
+      width: auto;
+      margin: 0 auto;
+      /* Center the image */
+    }
+
+    /* Custom styles */
+    .hub-item {
+      margin-bottom: 50px;
+      padding: 10px;
+      border-radius: 7px;
+    }
+
+    .modal-header {
+      background-color: #343a40;
+      color: white;
+    }
+
+    .modal-body {
+      padding: 30px;
+    }
+
+    .modal-title {
+      font-size: 24px;
+      font-weight: bold;
+    }
+
+    .modal-footer {
+      background-color: #f8f9fa;
+    }
+
+    .form-control {
+      border-radius: 20px;
+    }
+
+    .btn-enter,
+    .btn-signup {
+      border-radius: 20px;
+      background-color: #008176;
+      color: white;
+    }
+
+    /* Footer style */
+    footer {
+      background-color: #343a40;
+    }
+
+    footer p {
+      color: #ffffff;
+    }
+
+    .alert {
+      position: fixed;
+      top: 56px;
+      width: 100%;
+      z-index: 1030;
+    }
+
+    .alert-text {
+      animation: moveText 20s linear infinite;
+      display: inline-block;
+      /* Ensures the text doesn't break into new lines */
+      white-space: nowrap;
+      /* Prevents text from wrapping */
+    }
+
+    @keyframes moveText {
+      0% {
+        transform: translateX(100%);
+      }
+
+      100% {
+        transform: translateX(-100%);
+      }
+    }
+  </style>
+</head>
+
+<body style="padding-top: 100px;">
+
+  <!-- Navbar -->
+  <nav class="navbar navbar-expand-lg navbar-dark fixed-top"
+    style="background: linear-gradient(to right, #2c3e50, #4a90e2);">
+    <div class="container">
+      <a class="navbar-brand" href="#" style="font-family: 'Arial Black', sans-serif; font-size: 24px;">IMMORTAL 2.0</a>
+      <button class="navbar-toggler" type="button" data-toggle="collapse" data-target="#navbarNav"
+        aria-controls="navbarNav" aria-expanded="false" aria-label="Toggle navigation">
+        <span class="navbar-toggler-icon"></span>
+      </button>
+      <div class="collapse navbar-collapse" id="navbarNav">
+        <ul class="navbar-nav ml-auto">
+          <li class="nav-item">
+            <a class="nav-link" href="/" style="transition: color 0.3s;">Home</a>
+          </li>
+          <li class="nav-item">
+            <a class="nav-link" href="#" style="transition: color 0.3s;">Services</a>
+          </li>
+          <li class="nav-item">
+            <a class="nav-link" href="#" style="transition: color 0.3s;">About Us</a>
+          </li>
+          <li class="nav-item">
+            <a class="nav-link" href="#" style="transition: color 0.3s;">Help</a>
+          </li>
+          <li class="nav-item">
+            <button type="button" class="btn btn-dark" data-toggle="modal" data-target="#SignupModal"
+              style="background-color: rgb(3, 178, 217); border-radius: 10px; transition: background-color 0.3s;">
+              Patient Registration
+            </button>
+          </li>
+        </ul>
+      </div>
+    </div>
+  </nav>
+  <!-- <div class="announcement-bar"> -->
+
+  <div class="alert alert-info alert-dismissible fade show mb-0" role="alert">
+    !!Announcements <a href="#" class="alert-link">Take a glance</a>. Give it
+    a click if you want. Contact at 1800-xxx-xxx for more information
+  </div>
+
+
+  <!-- Carousel -->
+  <div id="carouselExampleCaptions" class="carousel slide" data-ride="carousel">
+    <div class="carousel-inner">
+      <div class="carousel-item active">
+        <img src="{{ url_for('static', filename='images/img1.jpg') }}" class="d-block w-100" alt="Image 1">
+        <div class="carousel-caption d-none d-md-block">
+          <h5>First slide label</h5>
+          <p>Nulla vitae elit libero, a pharetra augue mollis interdum.</p>
+        </div>
+      </div>
+      <div class="carousel-item">
+        <img src="{{ url_for('static', filename='images/img2.jpg') }}" class="d-block w-100" alt="Image 2">
+        <div class="carousel-caption d-none d-md-block">
+          <h5>Second slide label</h5>
+          <p>Lorem ipsum dolor sit amet, consectetur adipiscing elit.</p>
+        </div>
+      </div>
+      <div class="carousel-item">
+        <img src="{{ url_for('static', filename='images/img3.jpg') }}" class="d-block w-100" alt="Image 3">
+        <div class="carousel-caption d-none d-md-block">
+          <h5>Third slide label</h5>
+          <p>Praesent commodo cursus magna, vel scelerisque nisl consectetur.</p>
+        </div>
+      </div>
+    </div>
+    <a class="carousel-control-prev" href="#carouselExampleCaptions" role="button" data-slide="prev">
+      <span class="carousel-control-prev-icon" aria-hidden="true"></span>
+      <span class="sr-only">Previous</span>
+    </a>
+    <a class="carousel-control-next" href="#carouselExampleCaptions" role="button" data-slide="next">
+      <span class="carousel-control-next-icon" aria-hidden="true"></span>
+      <span class="sr-only">Next</span>
+    </a>
+  </div>
+
+  <!-- Hubs -->
+  <div class="container my-5">
+    <div class="row">
+      <div class="col-lg-4">
+        <div class="hub-item text-center">
+          <img src="{{ url_for('static', filename='images/doctor.jpg') }}" alt="" class="rounded-circle" width="140"
+            height="140">
+          <h2>Doctor's Hub</h2>
+          <button type="button" class="btn btn-dark" data-toggle="modal" data-target="#DoctorModal">Enter »</button>
+        </div>
+      </div>
+      <div class="col-lg-4">
+        <div class="hub-item text-center">
+          <img src="{{ url_for('static', filename='images/patient.jpg') }}" alt="" class="rounded-circle" width="140"
+            height="140">
+          <h2>Patient's Hub</h2>
+          <button type="button" class="btn btn-dark" data-toggle="modal" data-target="#PatientModal">Enter »</button>
+        </div>
+      </div>
+      <div class="col-lg-4">
+        <div class="hub-item text-center">
+          <img src="{{ url_for('static', filename='images/admin.jpg') }}" alt="" class="rounded-circle" width="140"
+            height="140">
+          <h2>Admin's Hub</h2>
+          <button type="button" class="btn btn-dark" data-toggle="modal" data-target="#AdminModal">Enter »</button>
+        </div>
+      </div>
+    </div>
+  </div>
+
+  <!-- Footer -->
+  <footer class="text-center text-white py-5">
+    <div class="container">
+      <div class="row">
+        <div class="col-md-3">
+          <h6 class="mb-4 font-weight-bold">imMORTAL: GIVING NEW LIVES</h6>
+          <p>It's A Govt. of India's initiative to help the people in rural parts of India.</p>
+        </div>
+        <div class="col-md-3">
+          <h6 class="text-uppercase mb-4 font-weight-bold">Sections</h6>
+          <p><a href="#" class="text-white">Home</a></p>
+          <p><a href="#" class="text-white">Services</a></p>
+          <p><a href="#" class="text-white">About Us</a></p>
+          <p><a href="#" class="text-white">Help</a></p>
+        </div>
+        <div class="col-md-3">
+          <h6 class="text-uppercase mb-4 font-weight-bold">Important Links</h6>
+          <p><a href="#" class="text-white">Privacy Policy</a></p>
+          <p><a href="#" class="text-white">Terms & Conditions</a></p>
+          <p><a href="#" class="text-white">FAQs</a></p>
+        </div>
+        <div class="col-md-3">
+          <h6 class="text-uppercase mb-4 font-weight-bold">Contact Us</h6>
+          <p>123, Main Road, India</p>
+          <p>Email: contact@immortal.in</p>
+          <p>Phone: +91 1234567890</p>
+        </div>
+      </div>
+    </div>
+    <div class="container mt-3">
+      <div class="row">
+        <div class="col-md-12">
+          <p class="mb-0">© 2024 Immortal. All rights reserved.</p>
+        </div>
+      </div>
+    </div>
+  </footer>
+
+  <!-- Signup Modal -->
+  <div class="modal fade" id="SignupModal" tabindex="-1" aria-labelledby="exampleModalLabel" aria-hidden="true">
+    <div class="modal-dialog">
+      <div class="modal-content">
+        <div class="modal-header">
+          <h5 class="modal-title" id="exampleModalLabel">Sign-Up to Immortal 2.0</h5>
+          <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+            <span aria-hidden="true">&times;</span>
+          </button>
+        </div>
+        <div class="modal-body">
+          <!-- Signup Form -->
+          <form action="/register/patient" method="POST" id="patientRegistrationForm">
+            <div class="form-group">
+              <label for="exampleInputType">Choose Type</label><br>
+              <div class="form-check form-check-inline">
+                <input class="form-check-input" type="radio" name="inlineRadioOptions" id="inlineRadio1" value="option1"
+                  checked>
+                <label class="form-check-label" for="inlineRadio1">Sign Up as Patient</label>
+              </div>
+              <div class="form-check form-check-inline">
+                <input class="form-check-input" type="radio" name="inlineRadioOptions" id="inlineRadio2" value="option2"
+                  disabled>
+                <label class="form-check-label" for="inlineRadio2">Sign Up as Doctor</label>
+              </div>
+              <!-- New radio button for assistant -->
+              <div class="form-check form-check-inline">
+                <input class="form-check-input" type="radio" name="inlineRadioOptions" id="inlineRadio3" value="option3"
+                  disabled>
+                <label class="form-check-label" for="inlineRadio3">Sign Up as Admin</label>
+              </div>
+            </div>
+            <div id="patientForm">
+              <div class="form-group">
+                <label for="exampleInputName">Name</label>
+                <input type="text" class="form-control" id="exampleInputName" name="exampleInputName"
+                  placeholder="Enter name" required>
+              </div>
+              <div class="form-group">
+                <label for="exampleInputPhone">Phone No</label>
+                <input type="text" class="form-control" id="exampleInputPhone" name="exampleInputPhone"
+                  placeholder="Enter phone number" required pattern="[0-9]{10}"
+                  title="Please enter a 10-digit phone number">
+                <small id="phoneError" class="text-danger" style="display: none;">Please enter a valid 10-digit phone
+                  number</small>
+              </div>
+              <div class="form-group">
+                <label for="exampleInputAdhar">Adhar No</label>
+                <input type="text" class="form-control" id="exampleInputAdhar" name="exampleInputAdhar"
+                  placeholder="Enter Adhar number" required>
+              </div>
+              <div class="form-group">
+                <label for="exampleInputDOB">Date of Birth</label>
+                <input type="date" class="form-control" id="exampleInputDOB" name="exampleInputDOB"
+                  placeholder="Enter date of birth" required>
+              </div>
+              <div class="form-group">
+                <label for="exampleInputAddress">Address</label>
+                <input type="text" class="form-control" id="exampleInputAddress" name="exampleInputAddress"
+                  placeholder="Enter address" required>
+              </div>
+              <div class="form-group">
+                <label for="exampleInputPin">Pin Code</label>
+                <input type="text" class="form-control" id="exampleInputPin" name="exampleInputPin"
+                  placeholder="Enter pin code" required>
+              </div>
+              <div class="form-group">
+                <label for="exampleInputEmail">Email</label>
+                <input type="email" class="form-control" id="exampleInputEmail" name="exampleInputEmail"
+                  placeholder="Enter email" required>
+              </div>
+              <div class="form-group">
+                <label for="exampleInputPassword">Password</label>
+                <input type="password" class="form-control" id="exampleInputPassword" name="exampleInputPassword"
+                  placeholder="Password" required>
+              </div>
+              <div class="form-group">
+                <label for="exampleInputConfirmPassword">Confirm Password</label>
+                <input type="password" class="form-control" id="exampleInputConfirmPassword"
+                  name="exampleInputConfirmPassword" placeholder="Confirm password" required>
+              </div>
+              <div class="alert alert-danger" id="passwordMatchError" style="display:none;">Passwords do not match.
+              </div>
+            </div>
+            <button type="submit" class="btn btn-signup btn-block">SignUp</button>
+          </form>
+        </div>
+      </div>
+    </div>
+  </div>
+<!--doctor login ......................................-->
+  <div class="modal fade" id="DoctorModal" tabindex="-1" aria-labelledby="exampleModalLabel" aria-hidden="true">
+    <div class="modal-dialog">
+      <div class="modal-content">
+        <div class="modal-header">
+          <h5 class="modal-title" id="exampleModalLabel">Login to Doctor's Hub</h5>
+          <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+            <span aria-hidden="true">&times;</span>
+          </button>
+        </div>
+        <div class="modal-body">
+          <!-- Doctor's Hub Login Form -->
+          <form method="post" action="{{ url_for('doctor_login') }}">
+            <div class="form-group">
+              <label for="doctorIdInput">Doctor ID</label>
+              <input type="text" class="form-control" id="doctorIdInput" name="doctor_id" placeholder="Enter Doctor ID" required>
+            </div>
+            <div class="form-group">
+              <label for="exampleInputPassword2">Password</label>
+              <input type="password" class="form-control" id="exampleInputPassword2" name="password" placeholder="Enter Password" required>
+            </div>
+            {% with messages = get_flashed_messages(with_categories=true) %}
+              {% if messages %}
+                <div class="alert alert-danger" role="alert">
+                  {% for category, message in messages %}
+                    {{ message }}
+                  {% endfor %}
+                </div>
+              {% endif %}
+            {% endwith %}
+            <a href="#" class="float-right">Forgot Password ?</a>
+            <button type="submit" class="btn btn-enter btn-block mt-3">Enter</button>
+            <p class="mt-3">Are you a New Member ? <button type="button" class="btn btn-enter btn-block mt-3" data-toggle="modal" data-target="#DoctorSignupModal">SignUp</button></p>
+          </form>
+        </div>
+      </div>
+    </div>
+  </div>
+
+
+
+  <!-- Doctor's Signup Modal ......................................................-->
+  <div class="modal fade" id="DoctorSignupModal" tabindex="-1" aria-labelledby="exampleModalLabel" aria-hidden="true">
+    <div class="modal-dialog">
+      <div class="modal-content">
+        <div class="modal-header">
+          <h5 class="modal-title" id="exampleModalLabel">Sign-Up to Doctor's Hub</h5>
+          <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+            <span aria-hidden="true">&times;</span>
+          </button>
+        </div>
+        <div class="modal-body">
+          <!-- Doctor's Signup Form -->
+          <form id="doctorSignupForm" method="post" action="/doctors/register">
+            <p style="color: red; font-weight: bold;">
+              Register Now... Wait for Admin approval... It takes 5 to 10 days. You will receive your ID and password in your email.
+            </p>
+            <div class="form-group">
+              <label for="exampleInputName">Name</label>
+              <input type="text" class="form-control" id="exampleInputName" name="name" placeholder="Enter name" required>
+            </div>
+            <div class="form-group">
+              <label for="exampleFormControlSelect1">Doctor Category</label>
+              <select class="form-control" id="exampleFormControlSelect1" name="category" required>
+                <option>-None-</option>
+                <option>ENT</option>
+                <option>Cancer</option>
+                <option>Gynecology</option>
+                <option>Dental</option>
+                <option>Medicine</option>
+              </select>
+            </div>
+            <div class="form-group">
+              <label for="exampleInputGovernmentID">Government Issue ID</label>
+              <input type="text" class="form-control" id="exampleInputGovernmentID" name="government_id" placeholder="Enter Government Issue ID" required>
+            </div>
+            <div class="form-group">
+              <label for="exampleInputAdhar">Aadhar No</label>
+              <input type="text" class="form-control" id="exampleInputAdhar" name="adhar_no" placeholder="Enter Aadhar number" required>
+            </div>
+            <div class="form-group">
+              <label for="exampleInputEmail">Email</label>
+              <input type="email" class="form-control" id="exampleInputEmail" name="email" placeholder="Enter email" required>
+            </div>
+            <div class="form-group">
+              <label for="exampleInputAddress">Address</label>
+              <input type="text" class="form-control" id="exampleInputAddress" name="address" placeholder="Enter address" required>
+            </div>
+            <div class="form-group">
+              <label for="exampleInputZip">Zip Code</label>
+              <input type="text" class="form-control" id="exampleInputZip" name="zip" placeholder="Enter zip code" required>
+            </div>
+            <div class="form-group">
+              <label for="exampleInputPassword">Password</label>
+              <input type="password" class="form-control" id="exampleInputPassword" name="password" placeholder="Password" required>
+            </div>
+            <div class="form-group">
+              <label for="exampleInputConfirmPassword">Confirm Password</label>
+              <input type="password" class="form-control" id="exampleInputConfirmPassword" name="confirm_password" placeholder="Confirm password" required>
+            </div>
+            <button type="submit" class="btn btn-signup btn-block">Signup</button>
+          </form>
+        </div>
+      </div>
+    </div>
+  </div>
+  
+  <!-- Patient's Modal -->
+  <div class="modal fade" id="PatientModal" tabindex="-1" aria-labelledby="exampleModalLabel" aria-hidden="true">
+    <div class="modal-dialog">
+      <div class="modal-content">
+        <div class="modal-header">
+          <h5 class="modal-title" id="exampleModalLabel">Login to Patient's Hub</h5>
+          <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+            <span aria-hidden="true">&times;</span>
+          </button>
+        </div>
+        <div class="modal-body">
+          <!-- Patient's Hub Login Form -->
+          <form action="/login/patient" method="POST" id="patientLoginForm">
+            <div class="form-group">
+              <label for="exampleInputEmail3">Email Address</label>
+              <input type="email" class="form-control" id="exampleInputEmail3" name="exampleInputEmail3"
+                aria-describedby="emailHelp" placeholder="Enter email" required>
+            </div>
+            <div class="form-group">
+              <label for="exampleInputPassword3">Password</label>
+              <input type="password" class="form-control" id="exampleInputPassword3" name="exampleInputPassword3"
+                placeholder="Enter Password" required>
+            </div>
+            <a href="#" class="float-right">Forgot Password ?</a>
+            <button type="submit" class="btn btn-enter btn-block mt-3">Enter</button>
+            <p class="mt-3">Are you a New Member ? <button type="button" class="btn btn-enter btn-block mt-3"
+                data-toggle="modal" data-target="#PatientSignupModal">SignUp</button></p>
+          </form>
+        </div>
+      </div>
+    </div>
+  </div>
+
+  <!-- Patient's Signup Modal -->
+  <div class="modal fade" id="PatientSignupModal" tabindex="-1" aria-labelledby="exampleModalLabel" aria-hidden="true">
+    <div class="modal-dialog">
+      <div class="modal-content">
+        <div class="modal-header">
+          <h5 class="modal-title" id="exampleModalLabel">Sign-Up to Patient's Hub</h5>
+          <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+            <span aria-hidden="true">&times;</span>
+          </button>
+        </div>
+        <div class="modal-body">
+          <!-- Patient's Signup Form -->
+          <form>
+            <div class="form-group">
+              <label for="exampleInputName">Name</label>
+              <input type="text" class="form-control" id="exampleInputName" placeholder="Enter name">
+            </div>
+            <div class="form-group">
+              <label for="exampleInputPhone">Phone No</label>
+              <input type="text" class="form-control" id="exampleInputPhone" placeholder="Enter phone number">
+            </div>
+            <div class="form-group">
+              <label for="exampleInputAdhar">Adhar No</label>
+              <input type="text" class="form-control" id="exampleInputAdhar" placeholder="Enter Adhar number">
+            </div>
+            <div class="form-group">
+              <label for="exampleInputAddress">Address</label>
+              <input type="text" class="form-control" id="exampleInputAddress" placeholder="Enter address">
+            </div>
+            <div class="form-group">
+              <label for="exampleInputPin">Pin Code</label>
+              <input type="text" class="form-control" id="exampleInputPin" placeholder="Enter pin code">
+            </div>
+            <div class="form-group">
+              <label for="exampleInputEmail">Email</label>
+              <input type="email" class="form-control" id="exampleInputEmail" placeholder="Enter email">
+            </div>
+            <div class="form-group">
+              <label for="exampleInputPassword">Password</label>
+              <input type="password" class="form-control" id="exampleInputPassword" placeholder="Password">
+            </div>
+            <div class="form-group">
+              <label for="exampleInputConfirmPassword">Confirm Password</label>
+              <input type="password" class="form-control" id="exampleInputConfirmPassword"
+                placeholder="Confirm password">
+            </div>
+            <button type="submit" class="btn btn-signup btn-block">Signup</button>
+          </form>
+        </div>
+      </div>
+    </div>
+  </div>
+
+  <!-- Admin's Modal -->
+  <div class="modal fade" id="AdminModal" tabindex="-1" aria-labelledby="exampleModalLabel" aria-hidden="true">
+    <div class="modal-dialog">
+      <div class="modal-content">
+        <div class="modal-header">
+          <h5 class="modal-title" id="exampleModalLabel">Login to Admin's Hub</h5>
+          <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+            <span aria-hidden="true">&times;</span>
+          </button>
+        </div>
+        <div class="modal-body">
+          <!-- Admin's Hub Login Form -->
+          <form action="{{ url_for('admin_login') }}" method="post">
+            <div class="form-group">
+              <label for="email">Email Address</label>
+              <input type="email" class="form-control" id="email" name="email" placeholder="Enter email" required>
+            </div>
+            <div class="form-group">
+              <label for="gov_id">Government Issue ID</label>
+              <input type="text" class="form-control" id="gov_id" name="gov_id" placeholder="Enter Government Issue ID"
+                required>
+            </div>
+            <div class="form-group">
+              <label for="password">Password</label>
+              <input type="password" class="form-control" id="password" name="password" placeholder="Enter Password"
+                required>
+            </div>
+            <a href="#" class="float-right">Forgot Government Issue ID?</a>
+            <button type="submit" class="btn btn-enter btn-block mt-3">Enter</button>
+            <p class="mt-3">Are you a New Assistant? <button type="button" class="btn btn-enter btn-block mt-3"
+                data-toggle="modal" data-target="#AssistantSignupModal">Register</button></p>
+          </form>
+          {% with messages = get_flashed_messages(with_categories=true) %}
+          {% if messages %}
+          {% for category, message in messages %}
+          <div class="alert alert-{{ category }} mt-3">{{ message }}</div>
+          {% endfor %}
+          {% endif %}
+          {% endwith %}
+        </div>
+      </div>
+    </div>
+  </div>
+
+  <!-- Assistant's Signup Modal -->
+
+
+  <!-- jQuery and Bootstrap Bundle (includes Popper) -->
+  <script src="https://code.jquery.com/jquery-3.5.1.slim.min.js"></script>
+  <script src="https://cdn.jsdelivr.net/npm/@popperjs/core@2.5.4/dist/umd/popper.min.js"></script>
+  <script src="https://stackpath.bootstrapcdn.com/bootstrap/4.5.2/js/bootstrap.min.js"></script>
+  <!-- Custom JavaScript -->
+  <!-- Custom JavaScript -->
+  <script>
+    // Show/hide patient, doctor, or assistant form based on radio button selection
+    $(document).ready(function () {
+
+      // Form submission handler
+      $('#patientRegistrationForm').submit(function (event) {
+        event.preventDefault(); // Prevent default form submission
+
+        // Check if passwords match
+        var password = document.getElementById('exampleInputPassword').value;
+        var confirmPassword = document.getElementById('exampleInputConfirmPassword').value;
+
+        // If passwords don't match, display error message and return
+        if (password !== confirmPassword) {
+          document.getElementById('passwordMatchError').style.display = 'block';
+          return;
+        }
+
+        // Send AJAX request to register patient
+        fetch('/register/patient', {
+          method: 'POST',
+          body: new FormData(this) // Send form data
+        })
+          .then(response => response.json()) // Parse response JSON
+          .then(data => {
+            console.log('Registration Response:', data); // Log the response
+            handleRegistrationResponse(data); // Handle the registration response
+          })
+          .catch(error => {
+            console.error('Error:', error);
+            alert('An error occurred. Please try again.');
+          });
+      });
+
+      function handleRegistrationResponse(data) {
+        // Log the response data
+        console.log('Handling Registration Response:', data);
+        // Extract message and redirect URL from the response
+        const message = data.message;
+        const redirectUrl = data.redirect_url;
+        // Display the message in a popup window
+        alert(message);
+        // Redirect to the specified URL
+        window.location.href = redirectUrl;
+      }
+    });
+
+
+    // Handle patient login form submission
+    document.getElementById('patientLoginForm').addEventListener('submit', function (event) {
+  event.preventDefault(); // Prevent default form submission
+
+  // Send AJAX request to login patient
+  fetch('/login/patient', {
+    method: 'POST',
+    body: new FormData(event.target) // Send form data
+  })
+    .then(response => response.json()) // Parse response JSON
+    .then(data => {
+      console.log('Login Response:', data); // Log the response
+      handleLoginResponse(data); // Handle the login response
+    })
+    .catch(error => {
+      console.error('Error:', error);
+      alert('An error occurred. Please try again.');
+    });
+});
+
+// Function to handle login response
+function handleLoginResponse(data) {
+  // Check if the login was successful
+  if (data.message === 'Login Successful') {
+    // Show pop-up message
+    alert('Login Successful!');
+
+    // Redirect to patient HTML page
+    window.location.href = '/patient.html';
+  } else {
+    // Show error message if login was unsuccessful
+    alert('Login Failed: ' + data.message);
+  }
+}
+
+    //handle for doctor login.....
+    $(document).ready(function () {
+      $('#doctorLoginForm').on('submit', function (event) {
+        event.preventDefault(); // Prevent default form submission
+
+        $.ajax({
+          url: '{{ url_for("doctor_login") }}',
+          type: 'POST',
+          data: $(this).serialize(),
+          success: function (response) {
+            if (response.success) {
+              // Redirect to the doctor dashboard
+              window.location.href = response.redirect_url;
+            } else {
+              // Show error message in a popup
+              alert(response.error);
+            }
+          }
+        });
+      });
+    });
+
+  </script>
+
+</body>
+
+</html>

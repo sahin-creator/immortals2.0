@@ -1,0 +1,380 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>ALL Data</title>
+  <!-- Bootstrap CSS -->
+  <link rel="stylesheet" href="https://stackpath.bootstrapcdn.com/bootstrap/4.5.2/css/bootstrap.min.css">
+  <style>
+    /* Custom styles */
+    body {
+      background-image: url("13313271_v870-tang-36.jpg"); /* Add your local image path here */
+      background-size: cover; /* Cover the entire background */
+      background-repeat: no-repeat; /* Do not repeat the background image */
+      margin-bottom: 60px; /* Ensure space for the footer */
+    }
+    .navbar {
+      background-color: #105409; /* Dark grey background color */
+      position: sticky; /* Fixed position */
+      top: 0; /* Stick to the top */
+      z-index: 1000; /* Ensure navbar stays on top */
+    }
+    .navbar-brand {
+      color: #ffffff; /* White color for brand */
+      font-size: 1.5rem;
+      font-weight: bold;
+    }
+    .navbar-nav .nav-link {
+      color: #ffffff; /* White color for nav links */
+    }
+    .nav-item {
+      margin-right: 10px; /* Adjust space between nav items */
+    }
+    .nav-button {
+      background-color: #ffffff; /* White background color for buttons */
+      color: #000000; /* Black color for button text */
+      font-weight: bold; /* Bold font weight for button text */
+      border-radius: 5px; /* Rounded corners for buttons */
+      padding: 5px 15px; /* Padding for buttons */
+    }
+    .announcement-bar {
+      background-color: rgb(222, 224, 229); /* Red background color for the announcement bar */
+      color: rgb(254, 8, 8); /* White text color for the announcement */
+      left: 0;
+      bottom: 0;
+      width: 100%; /* Full width */
+      /*text-align: center; /* Center align the text */
+    }
+
+    /* Add white background for hidden tables */
+    .hidden-table {
+      background-color: white;
+      border-radius: 5px;
+      padding: 10px;
+      margin-top: 10px;
+    }
+
+    /* Footer styles */
+    .footer {
+      background-color: #343a40; /* Same color as Navigation Bar */
+      color: #ffffff; /* White text color */
+      position: fixed; /* Fixed position */
+      bottom: 0; /* Stick to the bottom */
+      width: 100%; /* Full width */
+      padding: 5px 0; /* Padding */
+      text-align: center; /* Center align text */
+      height: 50px; /* Decreased height */
+    }
+    .footer-text {
+      font-size: 14px; /* Font size */
+      margin-bottom: 5px; /* Margin bottom */
+    }
+    .copyright {
+      font-size: 12px; /* Font size */
+    }
+
+    /* Scroll to top button */
+    #goToTopBtn {
+      display: none; /* Hide button by default */
+      position: fixed; /* Fixed position */
+      bottom: 70px; /* Bottom margin */
+      right: 20px; /* Right margin */
+      z-index: 99; /* Ensure button stays on top */
+    }
+
+    /* Profile Modal */
+    .profile-modal {
+      position: absolute;
+      top: 50%;
+      left: 50%;
+      transform: translate(-50%, -50%);
+      background-color: #fff;
+      border-radius: 10px;
+      padding: 20px;
+      box-shadow: 0 0 10px rgba(0, 0, 0, 0.1);
+    }
+
+    .profile-image {
+      width: 150px;
+      height: 150px;
+      border-radius: 50%;
+      margin: 0 auto;
+      display: block;
+    }
+
+    .profile-info {
+      text-align: center;
+      margin-top: 20px;
+    }
+
+    .profile-info p {
+      margin-bottom: 10px;
+    }
+  </style>
+</head>
+<body>
+
+  <nav class="navbar navbar-expand-lg navbar-dark">
+    <div class="container">
+      <a class="navbar-brand" href="#">IMMORTAL 2.0</a>
+      <button class="navbar-toggler" type="button" data-toggle="collapse" data-target="#navbarNav" aria-controls="navbarNav" aria-expanded="false" aria-label="Toggle navigation">
+        <span class="navbar-toggler-icon"></span>
+      </button>
+      <div class="collapse navbar-collapse" id="navbarNav">
+        <ul class="navbar-nav mr-auto">
+          <li class="nav-item">
+            <a class="nav-link" href="#">Home</a>
+          </li>
+          <li class="nav-item">
+            <a class="nav-link" href="#">Services</a>
+          </li>
+          <li class="nav-item">
+            <a class="nav-link" href="#">About Us</a>
+          </li>
+          <li class="nav-item">
+            <a class="nav-link" href="#">Contact Us</a>
+          </li>
+          <li class="nav-item">
+            <a class="nav-link" href="#">Help</a>
+          </li>
+        </ul>
+        <ul class="navbar-nav">
+          <li class="nav-item">
+            <a class="nav-button" href="#" data-toggle="modal" data-target="#addAdminModal">Add Admin</a>
+          </li>
+          <li class="nav-item dropdown">
+            <a class="nav-button" href="#" id="navbarDropdown">
+              Back to Home
+            </a>
+          </li>
+        </ul>
+      </div>
+    </div>
+  </nav>
+
+  <div class="container mt-5" id="content">
+    <h1>ALL DATA</h1>
+    <div class="row mt-4">
+      <div class="col-md-6">
+        <div class="card">
+          <div class="card-body">
+            <h5 class="card-title">Doctor Details</h5>
+            <p class="card-text">View and manage doctor information.</p>
+            <button id="toggleDoctorTableBtn" class="btn btn-primary">Go to Doctor Details</button>
+            <div id="doctorSearch" style="display: none;">
+              <input type="text" class="form-control mt-3" placeholder="Search Doctor...">
+            </div>
+          </div>
+        </div>
+      </div>
+      <div class="col-md-6">
+        <div class="card">
+          <div class="card-body">
+            <h5 class="card-title">Patients Details</h5>
+            <p class="card-text">View and manage patient information.</p>
+            <button id="togglePatientPersonalTableBtn" class="btn btn-primary">Personal Details</button>
+            <button id="togglePatientMedicalTableBtn" class="btn btn-primary ml-2">Medical Details</button>
+            <div id="patientSearch" style="display: none;">
+              <input type="text" class="form-control mt-3" placeholder="Search Patient...">
+            </div>
+          </div>
+        </div>
+      </div>
+    </div>
+    <div id="doctorTable" class="mt-5" style="display: none;">
+      <h2>Doctor Details</h2>
+      <table class="table hidden-table">
+        <thead>
+          <tr>
+            <th scope="col">Doctor ID</th>
+            <th scope="col">Doctor Name</th>
+            <th scope="col">Doctor Phone</th>
+            <th scope="col">Speciality</th>
+          </tr>
+        </thead>
+        <tbody id="doctorTableBody">
+          <!-- Table content will be dynamically loaded here -->
+        </tbody>
+      </table>
+    </div>
+    <div id="patientPersonalTable" class="mt-5" style="display: none;">
+      <h2>Patient Details - Personal</h2>
+      <table class="table hidden-table">
+        <thead>
+          <tr>
+            <th scope="col">Patient ID</th>
+            <th scope="col">Patient Name</th>
+            <th scope="col">Patient Phone</th>
+            <th scope="col">Patient Adhar ID</th>
+          </tr>
+        </thead>
+        <tbody id="patientPersonalTableBody">
+          <!-- Table content will be dynamically loaded here -->
+        </tbody>
+      </table>
+    </div>
+    <div id="patientMedicalTable" class="mt-5" style="display: none;">
+      <h2>Patient Details - Medical</h2>
+      <table class="table hidden-table">
+        <thead>
+          <tr>
+            <th scope="col">Patient ID</th>
+            <th scope="col">Height</th>
+            <th scope="col">Weight</th>
+            <th scope="col">Blood Sugar</th>
+            <th scope="col">Blood Pressure</th>
+            <th scope="col">SPO2</th>
+            <th scope="col">Blood Group</th>
+          </tr>
+        </thead>
+        <tbody id="patientMedicalTableBody">
+          <!-- Table content will be dynamically loaded here -->
+        </tbody>
+      </table>
+    </div>
+  </div>
+
+  <footer class="footer" id="footer">
+    <div class="container">
+      <p class="footer-text mb-0">IMMORTAL 2.0</p>
+      <p class="copyright mb-0">&copy; Copy write @IMMORTAL 2.0</p>
+    </div>
+  </footer>
+
+
+  <!-- Add Admin Modal -->
+  <div class="modal fade" id="addAdminModal" tabindex="-1" role="dialog" aria-labelledby="addAdminModalLabel" aria-hidden="true">
+    <div class="modal-dialog" role="document">
+      <div class="modal-content">
+        <div class="modal-header">
+          <h5 class="modal-title" id="addAdminModalLabel">Add New Admin</h5>
+          <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+            <span aria-hidden="true">&times;</span>
+          </button>
+        </div>
+        <div class="modal-body">
+          <!-- Form to add new admin -->
+          <form>
+            <div class="form-group">
+              <label for="adminName">Enter New Admin Name</label>
+              <input type="text" class="form-control" id="adminName">
+            </div>
+            <div class="form-group">
+              <label for="phoneNumber">Phone Number</label>
+              <input type="text" class="form-control" id="phoneNumber">
+            </div>
+            <div class="form-group">
+              <label for="emailAddress">Email Address</label>
+              <input type="email" class="form-control" id="emailAddress">
+            </div>
+            <div class="form-group">
+              <label for="govtIssueId">Government Issue ID Number</label>
+              <input type="text" class="form-control" id="govtIssueId">
+            </div>
+            <div class="form-group">
+              <label for="password">Password</label>
+              <input type="password" class="form-control" id="password">
+            </div>
+            <div class="form-group">
+              <label for="confirmPassword">Confirm Password</label>
+              <input type="password" class="form-control" id="confirmPassword">
+            </div>
+            <button type="button" class="btn btn-primary" onclick="saveAdmin()" id="saveBtn">Save</button>
+            <div class="form-group" style="display: none;" id="otpBox">
+              <p>We sent you a 4-digit Verification Mail on your email Id. Please Enter OTP in the box below</p>
+              <input type="text" class="form-control" id="otpInput">
+              <button type="button" class="btn btn-primary mt-2" id="doneBtn">Done</button>
+            </div>
+          </form>
+        </div>
+      </div>
+    </div>
+  </div>
+
+  <!-- Bootstrap JS -->
+  <script src="https://code.jquery.com/jquery-3.5.1.slim.min.js"></script>
+  <script src="https://cdn.jsdelivr.net/npm/@popperjs/core@2.5.4/dist/umd/popper.min.js"></script>
+  <script src="https://stackpath.bootstrapcdn.com/bootstrap/4.5.2/js/bootstrap.min.js"></script>
+  <script>
+    // Function to save admin
+    function saveAdmin() {
+      // Here you can write the logic to save the admin
+      // For demonstration, I'm just showing the OTP input box
+      var otpBox = document.getElementById('otpBox');
+      otpBox.style.display = 'block';
+      var saveBtn = document.getElementById('saveBtn');
+      saveBtn.style.display = 'none';
+    }
+
+    // Function to scroll to the top
+    function goToTop() {
+      window.scrollTo({ top: 0, behavior: 'smooth' });
+    }
+
+    // Load more content when scrolling reaches the bottom
+    window.addEventListener('scroll', function() {
+      if (window.innerHeight + window.scrollY >= document.body.offsetHeight) {
+        loadMoreContent();
+      }
+      // Show or hide "Go to top" button based on scroll position
+      var goToTopBtn = document.getElementById('goToTopBtn');
+      if (window.scrollY > 100) {
+        goToTopBtn.style.display = 'block';
+      } else {
+        goToTopBtn.style.display = 'none';
+      }
+    });
+
+    function loadMoreContent() {
+      // Here you can load more content dynamically
+      // For demonstration, I'm just appending a few more rows to each table
+      var doctorTableBody = document.getElementById('doctorTableBody');
+      var patientPersonalTableBody = document.getElementById('patientPersonalTableBody');
+      var patientMedicalTableBody = document.getElementById('patientMedicalTableBody');
+
+      // Append more rows to each table
+      appendRows(doctorTableBody, 2);
+      appendRows(patientPersonalTableBody, 2);
+      appendRows(patientMedicalTableBody, 2);
+    }
+
+    function appendRows(tableBody, numRows) {
+      for (var i = 0; i < numRows; i++) {
+        var row = document.createElement('tr');
+        row.innerHTML = '<td>12345</td><td>John Doe</td><td>9876543210</td><td>Cardiologist</td>';
+        tableBody.appendChild(row);
+      }
+    }
+
+    // Toggle display of doctor table
+    document.getElementById('toggleDoctorTableBtn').addEventListener('click', function() {
+      var doctorTable = document.getElementById('doctorTable');
+      doctorTable.style.display = (doctorTable.style.display === 'none') ? 'block' : 'none';
+      var doctorSearch = document.getElementById('doctorSearch');
+      doctorSearch.style.display = (doctorTable.style.display === 'none') ? 'none' : 'block';
+    });
+
+    // Toggle display of patient personal table
+    document.getElementById('togglePatientPersonalTableBtn').addEventListener('click', function() {
+      var patientPersonalTable = document.getElementById('patientPersonalTable');
+      patientPersonalTable.style.display = (patientPersonalTable.style.display === 'none') ? 'block' : 'none';
+      var patientSearch = document.getElementById('patientSearch');
+      patientSearch.style.display = (patientPersonalTable.style.display === 'none') ? 'none' : 'block';
+    });
+
+    // Toggle display of patient medical table
+    document.getElementById('togglePatientMedicalTableBtn').addEventListener('click', function() {
+      var patientMedicalTable = document.getElementById('patientMedicalTable');
+      patientMedicalTable.style.display = (patientMedicalTable.style.display === 'none') ? 'block' : 'none';
+      var patientSearch = document.getElementById('patientSearch');
+      patientSearch.style.display = (patientMedicalTable.style.display === 'none') ? 'none' : 'block';
+    });
+
+    // Scroll to top button functionality
+    document.getElementById('goToTopBtn').addEventListener('click', function() {
+      goToTop();
+    });
+  </script>
+</body>
+</html>

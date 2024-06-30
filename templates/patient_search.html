@@ -1,0 +1,172 @@
+<!DOCTYPE html>
+<html lang="en">
+    <head>
+        <meta charset="UTF-8">
+        <meta name="viewport" content="width=device-width, initial-scale=1.0">
+        <title>Patient Search</title>
+        <link rel="stylesheet" href="https://stackpath.bootstrapcdn.com/bootstrap/4.5.2/css/bootstrap.min.css">
+        <style>
+            .container { 
+                margin-top: 50px; 
+                background-color: #f8f9fa; /* Light gray background */
+                padding: 20px;
+                border-radius: 10px; /* Rounded corners */
+                box-shadow: 0px 0px 10px rgba(0, 0, 0, 0.1); /* Soft shadow */
+            }
+            h2 { 
+                margin-bottom: 30px; 
+                color: #007bff; /* Blue header */
+            }
+            .input-group { 
+                margin-bottom: 20px; 
+            }
+            .list-group-item { 
+                padding: 10px; 
+            }
+            .action-buttons { 
+                margin-top: 30px; 
+            }
+            #searchResult { 
+                margin-top: 50px; 
+            }
+            /* Search button color */
+            #searchButton {
+                background-color: #28a745; /* Green */
+                border-color: #28a745;
+            }
+            /* Search button hover color */
+            #searchButton:hover {
+                background-color: #218838; /* Darker green */
+                border-color: #1e7e34;
+            }
+            /* Update button color */
+            #updateButton {
+                background-color: #007bff; /* Blue */
+                border-color: #007bff;
+            }
+            /* Update button hover color */
+            #updateButton:hover {
+                background-color: #0056b3; /* Darker blue */
+                border-color: #004d99;
+            }
+        </style>
+    </head>
+<body>
+    <div class="container">
+        <h2 class="text-center">Patient Search</h2>
+        <div class="row">
+            <div class="col-md-8 offset-md-2">
+                <div class="input-group">
+                    <input type="text" class="form-control" id="searchBar" placeholder="Search by Patient ID...">
+                    <div class="input-group-append">
+                        <button class="btn btn-secondary" id="searchButton">Search</button>
+                    </div>
+                </div>
+            </div>
+        </div>
+
+        <div id="searchResult" style="display: none;">
+            <div class="row">
+                <div class="col-md-6">
+                    <h4>Personal Details</h4>
+                    <ul class="list-group">
+                        <li class="list-group-item"><strong>Name:</strong> <span id="name">John Doe</span></li>
+                        <li class="list-group-item"><strong>Patient ID:</strong> <span id="patientId">123456</span></li>
+                        <li class="list-group-item"><strong>Age:</strong> <span id="age">30</span></li>
+                        <li class="list-group-item"><strong>Aadhar:</strong> <span id="aadhar">1234-5678-9012</span></li>
+                        <li class="list-group-item"><strong>Phone No:</strong> <span id="phone">9876543210</span></li>
+                        <li class="list-group-item"><strong>Email:</strong> <span id="email">john.doe@example.com</span></li>
+                        <li class="list-group-item"><strong>Address:</strong> <span id="address">123 Main St, City</span></li>
+                    </ul>
+                </div>
+                <div class="col-md-6">
+                    <h4>Health Details</h4>
+                    <ul class="list-group">
+                        <li class="list-group-item"><strong>Blood Group:</strong> <input type="text" class="form-control editable-input" id="bloodGroup" value="O+"></li>
+                        <li class="list-group-item"><strong>Height:</strong> <input type="text" class="form-control editable-input" id="height" value="175 cm"></li>
+                        <li class="list-group-item"><strong>Weight:</strong> <input type="text" class="form-control editable-input" id="weight" value="70 kg"></li>
+                        <li class="list-group-item"><strong>Blood Pressure:</strong> <input type="text" class="form-control editable-input" id="bloodPressure" value="120/80"></li>
+                        <li class="list-group-item"><strong>Blood Sugar:</strong> <input type="text" class="form-control editable-input" id="bloodSugar" value="90 mg/dL"></li>
+                        <li class="list-group-item"><strong>SpO2:</strong> <input type="text" class="form-control editable-input" id="spo2" value="98%"></li>
+                    </ul>
+                </div>
+            </div>
+            <div class="action-buttons text-center">
+                <button class="btn btn-primary" id="updateButton">Update</button>
+            </div>
+        </div>
+
+        <div class="text-center mt-4">
+            <a href="/admin_dashboard" class="btn btn-secondary">Go Back to Main Page</a>
+        </div>
+    </div>
+
+    <script src="https://code.jquery.com/jquery-3.5.1.min.js"></script>
+    <script src="https://cdn.jsdelivr.net/npm/@popperjs/core@2.5.2/dist/umd/popper.min.js"></script>
+    <script src="https://stackpath.bootstrapcdn.com/bootstrap/4.5.2/js/bootstrap.min.js"></script>
+    <script>
+        $(document).ready(function(){
+            $('#searchButton').click(function(){
+                // Fetch patient details using AJAX
+                let patientId = $('#searchBar').val();
+                if(patientId) {
+                    // Placeholder: Replace with actual AJAX call
+                    $.ajax({
+                        url: `/search_patient/${patientId}`,
+                        method: 'GET',
+                        success: function(data) {
+                            if(data) {
+                                // Populate the details
+                                $('#name').text(data.name);
+                                $('#patientId').text(data.patient_id);
+                                $('#age').text(data.age);
+                                $('#aadhar').text(data.adhar);
+                                $('#phone').text(data.phone);
+                                $('#email').text(data.email);
+                                $('#address').text(data.address);
+                                $('#bloodGroup').val(data.health.blood_group);
+                                $('#height').val(data.health.height_cm + ' cm');
+                                $('#weight').val(data.health.weight_kg + ' kg');
+                                $('#bloodPressure').val(data.health.blood_pressure);
+                                $('#bloodSugar').val(data.health.blood_sugar);
+                                $('#spo2').val(data.health.spo2 + '%');
+                                $('#searchResult').show();
+                            } else {
+                                alert('Patient not found');
+                            }
+                        }
+                    });
+                } else {
+                    alert('Please enter a Patient ID');
+                }
+            });
+
+            $('#updateButton').click(function(){
+                // Update patient health details using AJAX
+                let patientId = $('#patientId').text();
+                let updatedData = {
+                    blood_group: $('#bloodGroup').val(),
+                    height: $('#height').val(),
+                    weight: $('#weight').val(),
+                    blood_pressure: $('#bloodPressure').val(),
+                    blood_sugar: $('#bloodSugar').val(),
+                    spo2: $('#spo2').val()
+                };
+
+                $.ajax({
+                    url: `/update_patient_health/${patientId}`,
+                    method: 'POST',
+                    contentType: 'application/json',
+                    data: JSON.stringify(updatedData),
+                    success: function(response) {
+                        alert('Health details updated successfully');
+                    },
+                    error: function() {
+                        alert('Error updating health details');
+                    }
+                });
+            });
+        });
+    </script>
+</body>
+</html>

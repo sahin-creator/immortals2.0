@@ -1,0 +1,541 @@
+<!DOCTYPE html>
+<html lang="en">
+  <head>
+    <!-- Required meta tags -->
+    <meta charset="utf-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1" />
+
+    <!-- Bootstrap CSS -->
+    <link
+      href="https://cdn.jsdelivr.net/npm/bootstrap@5.0.2/dist/css/bootstrap.min.css"
+      rel="stylesheet"
+      integrity="sha384-EVSTQN3/azprG1Anm3QDgpJLIm9Nao0Yz1ztcQTwFspd3yD65VohhpuuCOmLASjC"
+      crossorigin="anonymous"
+    />
+    <style>
+      body {
+        padding-top: 63.5px;
+        font-family: Cambria, Cochin, Georgia, Times, 'Times New Roman', serif;
+      }
+
+      /*navbar css*/
+      .navbar {
+        position: fixed;
+        top: 0;
+        width: 100%;
+        z-index: 1000;
+      }
+
+      /*sidebar css*/
+      .sidebar {
+        width: 4rem;
+        height: 91vh;
+        background-color: #7e8206; /* Dark background */
+        position: fixed;
+        left: 0;
+        top: 63.5px;
+        z-index: 999;
+      }
+
+      .nav-link {
+        border-radius: 0%; /* Remove border-radius for square shape */
+      }
+
+      .nav-link img {
+        width: 24px; /* Adjust the width as needed */
+        height: 24px; /* Adjust the height as needed */
+      }
+
+      /* announcement bar css*/
+      .announcement-bar {
+        width: calc(100% - 4rem); /* Remaining width of the screen */
+        margin-left: 4rem; /* Align with the sidebar */
+        background-color: #266459; /* Background color for the announcement bar */
+        color: #000; /* Text color */
+        font-weight: bold;
+        white-space: nowrap;
+        overflow: hidden;
+        position: fixed;
+        height: 2rem;
+        display: flex;
+        align-items: center;
+        padding-left: 1rem;
+        z-index: 998;
+      }
+
+      .announcement-content {
+        display: inline-block;
+        white-space: pre;
+        position: relative;
+        animation: scroll 20s linear infinite;
+      }
+
+      @keyframes scroll {
+        0% {
+          transform: translateX(100%);
+        }
+        100% {
+          transform: translateX(-100%);
+        }
+      }
+
+      /*user card css*/
+      .user-card {
+        margin: 4rem 1rem 0 5rem;
+        width: calc(95% - 4rem);
+        height: auto;
+        border: 2px solid black;
+      }
+
+      .user-card {
+        border-radius: 2em;
+        background-color:  #7e8206;
+      }
+
+      .user-card-img {
+        width: 100px;
+        height: 100px;
+        border-radius: 50%;
+        object-fit: cover;
+        border: 2px solid black;
+      }
+
+      .user-card-body {
+        display: flex;
+        align-items: center;
+      }
+
+      .user-card-title{
+        color:#000;
+        font-weight: bold;
+      }
+
+      .user-card-text {
+        margin-left: 1rem;
+        color: #ffffff;
+      }
+
+      /*info card css*/
+      .info-cards-container {
+        display: flex;
+        flex-wrap: wrap;
+        margin-left: 5rem;
+        margin-top: 1rem;
+      }
+
+      .info-cards {
+        margin: 0.5rem;
+        width: calc((100% - 4rem) / 5 - 1rem);
+        background-color: #266459;
+        border: 1px solid #000;
+        border-radius: 0.25rem;
+        box-shadow: 0 0.125rem 0.25rem rgba(0, 0, 0, 0.075);
+      }
+
+      .info-card-body {
+        padding: 1rem;
+      }
+
+      .info-card-title {
+        margin-bottom: 0.5rem;
+        font-weight: bold;
+        font-size: 1.25rem;
+      }
+
+      .info-card-text {
+        font-size: 1rem;
+        font-weight: bold;
+        color: #fbfbfb;
+      }
+      @media (max-width: 1200px) {
+        .info-cards {
+          width: calc((100% - 4rem) / 5 - 1rem);
+        }
+      }
+
+      @media (max-width: 992px) {
+        .info-cards-container {
+          margin-left: 5rem;
+        }
+        .info-cards {
+          width: calc((100% - 2rem) / 3 - 1rem);
+        }
+      }
+
+      @media (max-width: 768px) {
+        .info-cards-container {
+          flex-direction: column;
+          margin-left: 5rem;
+        }
+        .info-cards {
+          width: calc(100% - 1rem);
+        }
+      }
+      .announcement-section {
+        background-color: #f0f0f0;
+        border-radius: 10px;
+        padding: 20px;
+        margin-bottom: 20px;
+      }
+      .btn-primary {
+        background-color: #00c4cc;
+        border-color: #00c4cc;
+        border-radius: 10px;
+      }
+      .btn-primary:hover {
+        background-color: #0097a7;
+        border-color: #0097a7;
+      }
+      .btn-warning {
+        background-color: #ff6f61;
+        border-color: #ff6f61;
+        border-radius: 10px;
+      }
+      .btn-warning:hover {
+        background-color: #ff3d00;
+        border-color: #ff3d00;
+      }
+      .announcement-cards-container {
+        display: flex;
+        flex-wrap: wrap;
+        margin-left: 5rem;
+        margin-top: 1rem;
+        margin-right: 1rem;
+      }
+      footer {
+        background-color: #343a40;
+        color: #ffffff;
+    }
+    </style>
+
+    <title>imMORTAL2.0:admin section</title>
+  </head>
+  <body>
+    <!--nav bar starts-->
+    <nav class="navbar navbar-expand-lg navbar-dark bg-dark">
+      <div class="container-fluid">
+        <a
+          class="navbar-brand fw-bold"
+          href="#"
+          style="border-bottom: 4px solid #00c4cc"
+          >IMMORTAL 2.0</a
+        >
+        <button
+          class="navbar-toggler"
+          type="button"
+          data-bs-toggle="collapse"
+          data-bs-target="#navbarNavAltMarkup"
+          aria-controls="navbarNavAltMarkup"
+          aria-expanded="false"
+          aria-label="Toggle navigation"
+        >
+          <span class="navbar-toggler-icon"></span>
+        </button>
+        <div class="collapse navbar-collapse" id="navbarNavAltMarkup">
+          <div class="navbar-nav">
+            <a class="nav-link active" aria-current="page" href="#">Home</a>
+            <a class="nav-link" href="#">About Us</a>
+            <a class="nav-link" href="#">Contact Us</a>
+          </div>
+        </div>
+      </div>
+    </nav>
+    <!-- nav bar ends -->
+
+    <!-- Announcement bar starts -->
+    <div class="announcement-bar">
+      <div class="announcement-content">
+        This is an important announcement. Please stay tuned for more updates.
+      </div>
+      <div class="announcement-content">
+        This is an important announcement. Please stay tuned for more updates.
+      </div>
+    </div>
+    <!-- Announcement bar ends -->
+
+    <!-- User card starts -->
+    <div class="user-card p-3">
+      <div class="user-card-body">
+        <img
+          src="https://github.com/mdo.png"
+          alt="User"
+          class="user-card-img"
+        />
+        <div class="user-card-text">
+          <h5 class="user-card-title fw-bold"><u>ADMIN DETAILS</u></h5>
+          <p class="user-card-text fw-bold">
+            Name: Atindra Ghosh <br />Govt. Issue Id: 088877 <br />
+            Aadhar No: 609476584657 <br />Hospital: Burdwan Medical College &
+            Hospital <br />Email ID:atindraghosh2017@gmail.com<br />Phone No:
+            9786455628<br />Address: Burdwan, 713101
+          </p>
+        </div>
+      </div>
+    </div>
+    <!-- User card ends -->
+
+    <!-- Info cards start -->
+    <div class="info-cards-container">
+      <div class="info-card info-cards">
+        <div class="info-card-body">
+          <h5 class="info-card-title text-center">ADMINS</h5>
+          <p class="info-card-text text-center"
+            >Total:10</p
+          >
+        </div>
+      </div>
+      <div class="info-card info-cards">
+        <div class="info-card-body">
+          <h5 class="info-card-title text-center">DOCTORS</h5>
+          <p class="info-card-text text-center"
+            >Total:200</p
+          >
+        </div>
+      </div>
+      <div class="info-card info-cards">
+        <div class="info-card-body">
+          <h5 class="info-card-title text-center">PATIENTS</h5>
+          <p class="info-card-text text-center"
+            >Total:2,00,000</p
+          >
+        </div>
+      </div>
+      <div class="info-card info-cards">
+        <div class="info-card-body">
+          <h5 class="info-card-title text-center">PENDING APPROVAL</h5>
+          <p class="info-card-text text-center"
+            >Total: 25</p
+          >
+        </div>
+      </div>
+      <div class="info-card info-cards">
+        <div class="info-card-body">
+          <h5 class="info-card-title text-center">PENDING APPOINTMENT APPROVALS</h5>
+          <p class="info-card-text text-center"
+            >Total:50</p
+          >
+        </div>
+      </div>
+    </div>
+    <!-- Info cards end -->
+    <!--announcement post starts-->
+    <!-- Announcement sections -->
+    <div class="announcement-cards-container row">
+      <!-- Announcement for Patient -->
+      <div class="col-md-6">
+        <div class="announcement-section">
+          <h5>Announcement for Patient</h5>
+          <hr />
+          <form>
+            <div class="mb-3">
+              <label for="patientAnnouncement"
+                >Type your announcement for patients:</label
+              >
+              <textarea
+                class="form-control"
+                id="patientAnnouncement"
+                rows="3"
+                placeholder="Type your message..."
+              ></textarea>
+            </div>
+            <button type="submit" class="btn btn-primary">
+              Post Announcement
+            </button>
+          </form>
+          <hr />
+          <h6>Past Announcements</h6>
+          <ul>
+            <li>
+              Announcement 1 - <small>Time & Date</small>
+              <button type="button" class="btn btn-danger btn-sm">
+                Delete
+              </button>
+            </li>
+            <hr />
+            <li>
+              Announcement 2 - <small>Time & Date</small>
+              <button type="button" class="btn btn-danger btn-sm">
+                Delete
+              </button>
+            </li>
+            <!-- Add more announcements here -->
+          </ul>
+        </div>
+      </div>
+      <!-- Announcement for Doctor -->
+      <div class="col-md-6">
+        <div class="announcement-section">
+          <h5>Announcement for Doctor</h5>
+          <hr />
+          <form>
+            <div class="mb-3">
+              <label for="doctorAnnouncement"
+                >Type your announcement for doctors:</label
+              >
+              <textarea
+                class="form-control"
+                id="doctorAnnouncement"
+                rows="3"
+                placeholder="Type your message..."
+              ></textarea>
+            </div>
+            <button type="submit" class="btn btn-primary">
+              Post Announcement
+            </button>
+          </form>
+          <hr />
+          <h6>Past Announcements</h6>
+          <ul>
+            <li>
+              Announcement 1 - <small>Time & Date</small>
+              <button type="button" class="btn btn-danger btn-sm">
+                Delete
+              </button>
+            </li>
+            <hr />
+            <li>
+              Announcement 2 - <small>Time & Date</small>
+              <button type="button" class="btn btn-danger btn-sm">
+                Delete
+              </button>
+            </li>
+            <!-- Add more announcements here -->
+          </ul>
+        </div>
+      </div>
+    </div>
+    <!--announcement post ends-->
+    <!-- Sidebar starts -->
+    <div class="d-flex flex-column flex-shrink-0 sidebar">
+      <ul class="nav nav-pills nav-flush flex-column mb-auto text-center">
+        <li class="nav-item">
+          <a
+            href="try_o_daktar.html"
+            class="nav-link py-3 border-bottom"
+            aria-current="page"
+            title=""
+            data-bs-toggle="tooltip"
+            data-bs-placement="right"
+            data-bs-original-title="Home"
+          >
+            <img src="./home_img.png" alt="" />
+          </a>
+        </li>
+        <li>
+          <a
+            href="./search.html"
+            class="nav-link py-3 border-bottom"
+            title=""
+            data-bs-toggle="tooltip"
+            data-bs-placement="right"
+            data-bs-original-title="Doctor's data"
+            
+          >
+            <img src="./doctor_img.png" alt="" />
+          </a>
+        </li>
+        <li>
+          <a
+            href="./search.html"
+            class="nav-link py-3 border-bottom"
+            title=""
+            data-bs-toggle="tooltip"
+            data-bs-placement="right"
+            data-bs-original-title="Patient's data"
+            
+          >
+            <img src="./patient_img.png" alt="" />
+          </a>
+        </li>
+        <li>
+          <a
+            href="#"
+            class="nav-link py-3 border-bottom"
+            title=""
+            data-bs-toggle="tooltip"
+            data-bs-placement="right"
+            data-bs-original-title="Query requests"
+          >
+            <img src="./query_img.png" alt="" />
+          </a>
+        </li>
+        <li>
+          <a
+            href="#"
+            class="nav-link py-3 border-bottom"
+            title=""
+            data-bs-toggle="tooltip"
+            data-bs-placement="right"
+            data-bs-original-title="details change"
+          >
+            <img src="./details.png" alt="" />
+          </a>
+        </li>
+        <li>
+          <a
+            href="#"
+            class="nav-link py-3 border-bottom"
+            title=""
+            data-bs-toggle="tooltip"
+            data-bs-placement="right"
+            data-bs-original-title="Appointment data"
+          >
+            <img src="./appointment_img.png" alt="" />
+          </a>
+        </li>
+      </ul>
+      <div class="dropdown" style="margin-top: 11em">
+        <a
+          href="#"
+          class="d-flex align-items-center justify-content-center p-3 link-dark text-decoration-none border-top dropdown-toggle"
+          id="dropdownUser3"
+          data-bs-toggle="dropdown"
+          aria-expanded="false"
+        >
+          <img
+            src="https://github.com/mdo.png"
+            alt="mdo"
+            width="24"
+            height="24"
+            class="rounded-circle"
+          />
+        </a>
+        <ul
+          class="dropdown-menu text-small shadow"
+          aria-labelledby="dropdownUser3"
+        >
+          <li><a class="dropdown-item" href="#">New project...</a></li>
+          <li><a class="dropdown-item" href="#">Settings</a></li>
+          <li><a class="dropdown-item" href="#">Profile</a></li>
+          <li><hr class="dropdown-divider" /></li>
+          <li><a class="dropdown-item" href="#">Sign out</a></li>
+        </ul>
+      </div>
+    </div>
+    <footer class="text-center text-lg-start">
+      <div class="text-center p-3" style="background-color: rgba(0, 0, 0, 0.2)">
+        © 2024 imMORTAL: Designed and developed by Atindra Ghosh
+      </div>
+    </footer>
+    <!-- Sidebar ends -->
+
+    <!-- Optional JavaScript; choose one of the two! -->
+    <!-- Option 1: Bootstrap Bundle with Popper -->
+    <script
+      src="https://cdn.jsdelivr.net/npm/bootstrap@5.0.2/dist/js/bootstrap.bundle.min.js"
+      integrity="sha384-MrcW6ZMFYlzcLA8Nl+NtUVF0sA7MsXsP1UyJoMp4YLEuNSfAP+JcXn/tWtIaxVXM"
+      crossorigin="anonymous"
+    ></script>
+    <!--js for tooltip-->
+    <script>
+      document.addEventListener("DOMContentLoaded", function () {
+        var tooltipTriggerList = [].slice.call(
+          document.querySelectorAll('[data-bs-toggle="tooltip"]')
+        );
+        var tooltipList = tooltipTriggerList.map(function (tooltipTriggerEl) {
+          return new bootstrap.Tooltip(tooltipTriggerEl);
+        });
+      });
+    </script>
+  </body>
+</html>

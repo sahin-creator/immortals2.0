@@ -1,0 +1,616 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>imMORTAL: Patient Section</title>
+    <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0-alpha1/dist/css/bootstrap.min.css">
+    <link rel="stylesheet"
+        href="https://cdnjs.cloudflare.com/ajax/libs/bootstrap-icons/1.11.3/font/bootstrap-icons.min.css">
+    <style>
+        body {
+            font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+            background-color: #f8f9fa;
+        }
+
+        .navbar-brand {
+            font-weight: bold;
+            border-bottom: 4px solid #17a2b8;
+        }
+
+        .navbar-toggler {
+            border-color: #00ff18;
+        }
+
+        .navbar-toggler-icon {
+            background-color: #00ff18;
+        }
+
+        .navbar-nav .nav-link {
+            color: #ffffff;
+            font-weight: bold;
+        }
+
+        .navbar-nav .nav-link:hover {
+            color: #00ff18;
+        }
+
+        .alert-info {
+            background-color: #00bfff;
+            color: #ffffff;
+        }
+
+        .table-container {
+            margin-bottom: 20px;
+        }
+
+        .table-heading {
+            background-color: #ff934a;
+            color: #ffffff;
+            padding: 10px;
+            border-radius: 5px 5px 0 0;
+        }
+
+        .table-content {
+            background-color: #ffffff;
+            border: 2px solid transparent;
+            border-radius: 0 0 5px 5px;
+            transition: all 0.3s ease;
+            box-shadow: 0px 0px 15px 0px rgba(0, 0, 0, 0.1);
+        }
+
+        .table-content tr:hover {
+            background-color: #f2f2f2;
+        }
+
+        .table-content td {
+            padding: 15px;
+            border-top: 1px solid #dee2e6;
+            color: #495057;
+        }
+
+        .card {
+            background-color: #343a40;
+            border-radius: 15px;
+        }
+
+        .card-title {
+            color: #0095ff;
+        }
+
+        .card-text {
+            color: #ffffff;
+        }
+
+        .btn-primary {
+            background-color: #00ff18;
+            border-color: #00ff18;
+            border-radius: 10px;
+        }
+
+        .btn-primary:hover {
+            background-color: #00e614;
+            border-color: #00e614;
+        }
+
+        .btn-secondary {
+            background-color: #ff006f;
+            border-color: #ff006f;
+            border-radius: 10px;
+        }
+
+        .btn-secondary:hover {
+            background-color: #e6005c;
+            border-color: #e6005c;
+        }
+
+        footer {
+            background-color: #343a40;
+            color: #ffffff;
+        }
+
+        .table-history-heading {
+            background-color: #343a40;
+            color: #ffffff;
+            padding: 10px;
+            border-radius: 5px 5px 0 0;
+        }
+
+        .table-history-content {
+            background-color: #f8f9fa;
+            border: 2px solid transparent;
+            border-radius: 0 0 5px 5px;
+            transition: all 0.3s ease;
+        }
+
+        .table-history-content tr:hover {
+            background-color: #e9ecef;
+        }
+
+        .table-history-content td {
+            padding: 15px;
+            border-top: 1px solid #dee2e6;
+            color: #495057;
+        }
+
+        .modal-content {
+            border-radius: 15px;
+        }
+
+        .modal-title {
+            color: #ffffff;
+        }
+
+        .form-control {
+            border-radius: 20px;
+        }
+
+        /* Add this style to change the color of the modal header for "Book Appointment" */
+        .modal-header.book-appointment {
+            background-color: #343a40 !important;
+            /* Change this to your desired color */
+        }
+
+        /* Add this style for the chat modal */
+        .modal-header.chat-header {
+            background-color: #343a40 !important;
+            /* Change this to your desired color */
+        }
+    </style>
+</head>
+
+<body>
+
+    <nav class="navbar navbar-expand-lg navbar-dark bg-dark">
+        <div class="container-fluid">
+            <a class="navbar-brand" href="#">IMMORTAL <span class="badge bg-success">2.0</span></a>
+            <button class="navbar-toggler" type="button" data-bs-toggle="collapse"
+                data-bs-target="#navbarSupportedContent" aria-controls="navbarSupportedContent" aria-expanded="false"
+                aria-label="Toggle navigation">
+                <span class="navbar-toggler-icon"></span>
+            </button>
+            <div class="collapse navbar-collapse" id="navbarSupportedContent">
+                <ul class="navbar-nav me-auto mb-2 mb-lg-0">
+                    <li class="nav-item">
+                        <a class="nav-link active" aria-current="page" href="#">Home</a>
+                    </li>
+                    <li class="nav-item">
+                        <a class="nav-link" href="#">About Us</a>
+                    </li>
+                    <li class="nav-item">
+                        <a class="nav-link" href="#">Contact Us</a>
+                    </li>
+                </ul>
+                <div class="btn-group">
+                    <button type="button" class="btn btn-secondary dropdown-toggle" data-bs-toggle="dropdown"
+                        aria-expanded="false">
+                        <i class="bi bi-person-circle"></i>
+                    </button>
+                    <ul class="dropdown-menu dropdown-menu-end">
+                        <li><a class="dropdown-item" href="#"><i class="bi bi-patch-question me-2"></i>Setting</a></li>
+                        <li><a class="dropdown-item" href="#"><i class="bi bi-patch-question me-2"></i>Help</a></li>
+                        <li><a class="dropdown-item" href="/logout"><i class="bi bi-box-arrow-right me-2"></i>Log
+                                Out</a></li>
+                    </ul>
+                </div>
+            </div>
+        </div>
+    </nav>
+
+    <div class="alert alert-info alert-dismissible fade show" role="alert">
+        <strong>Welcome to imMORTAL 2.0!</strong> This is a Doctor portal to manage your medical records and
+        appointments. Feel free to explore.
+        <button type="button" class="btn-close" data-bs-dismiss="alert" aria-label="Close"></button>
+    </div>
+
+    <div class="container my-5">
+        <!-- Profile Section -->
+        <div class="row">
+            <div class="col-md-12">
+                <div class="card mb-4">
+                    <div class="card-body">
+                        <h5 class="card-title">Doctor Profile</h5>
+                        <div class="row">
+                            <div class="col-md-6 pe-5">
+                                <!-- First Column -->
+                                <div class="d-flex align-items-center mb-3">
+                                    <img src="{{ doctor.profile_picture }}" alt="Doctor Image"
+                                        class="rounded-circle me-3" style="width: 100px; height: 100px;"
+                                        onerror="this.onerror=null; this.src='placeholder.jpg';">
+                                    <div>
+                                        {% if doctor.name %}
+                                        <p class="card-text">Name - {{ doctor.name }}</p>
+                                        {% else %}
+                                        <p class="card-text">Name - Not updated</p>
+                                        {% endif %}
+                                        {% if doctor.government_id %}
+                                        <p class="card-text">Government Issue Id - {{ doctor.government_id }}</p>
+                                        {% else %}
+                                        <p class="card-text">Government Issue Id - Not updated</p>
+                                        {% endif %}
+                                        {% if doctor.adhar_no %}
+                                        <p class="card-text">Adhar No - {{ doctor.adhar_no }}</p>
+                                        {% else %}
+                                        <p class="card-text">Adhar No - Not updated</p>
+                                        {% endif %}
+                                        {% if doctor.email %}
+                                        <p class="card-text">Email - {{ doctor.email }}</p>
+                                        {% else %}
+                                        <p class="card-text">Email - Not updated</p>
+                                        {% endif %}
+                                    </div>
+                                </div>
+                            </div>
+                            <div class="col-md-6">
+                                <!-- Second Column -->
+                                {% if doctor.address %}
+                                <p class="card-text">Address - {{ doctor.address }}</p>
+                                {% else %}
+                                <p class="card-text">Address - Not updated</p>
+                                {% endif %}
+                                {% if doctor.category %}
+                                <p class="card-text">Category - {{ doctor.category }}</p>
+                                {% else %}
+                                <p class="card-text">Category - Not updated</p>
+                                {% endif %}
+                                {% if doctor.state %}
+                                <p class="card-text">State - {{ doctor.state }}</p>
+                                {% else %}
+                                <p class="card-text">State - Not updated</p>
+                                {% endif %}
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+
+
+        <!-- Add New Doctor and Raise Query to Admin sections -->
+        <div class="row">
+            <div class="col-md-6">
+                <div class="card">
+                    <div class="card-body">
+                        <h5 class="card-title">Add New Doctor</h5>
+                        <p class="card-text">Here you can add a new doctor. After adding, it takes time because the
+                            admin needs to approve.</p>
+                        <button type="button" class="btn btn-primary" data-bs-toggle="modal"
+                            data-bs-target="#exampleModal">Add Now</button>
+                    </div>
+                </div>
+            </div>
+            <div class="col-md-6">
+                <div class="card">
+                    <div class="card-body">
+                        <h5 class="card-title">Raise Query to Admin</h5>
+                        <p class="card-text">If you are facing any kind of problem like adding a new doctor or related
+                            to patient data, test reports, appointment dates, you can raise a query.</p>
+                        <a href="#" class="btn btn-secondary">Raise Query</a>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <div class="modal fade" id="exampleModal" tabindex="-1" aria-labelledby="exampleModalLabel" aria-hidden="true">
+        <div class="modal-dialog modal-dialog-centered">
+            <div class="modal-content">
+                <div class="modal-header bg-primary book-appointment">
+                    <h5 class="modal-title" id="exampleModalLabel">Add New Doctor</h5>
+                    <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
+                </div>
+                <div class="modal-body">
+                    <form>
+                        <div class="mb-3">
+                            <label for="email" class="form-label">Name</label>
+                            <input type="email" class="form-control" id="email" placeholder="Enter Doctor Name">
+                        </div>
+                        <div class="mb-3">
+                            <label for="email" class="form-label">Email ID</label>
+                            <input type="email" class="form-control" id="email" placeholder="Enter Doctor Email ID">
+                        </div>
+                        <div class="mb-3">
+                            <label for="email" class="form-label">Government Issue ID</label>
+                            <input type="email" class="form-control" id="email" placeholder="Enter Doctor ID">
+                        </div>
+                        <div class="mb-3">
+                            <label for="email" class="form-label">Adhar No</label>
+                            <input type="email" class="form-control" id="email" placeholder="Enter Doctor Adhar No">
+                        </div>
+
+
+                        <div class="mb-3">
+                            <label for="doctor" class="form-label">Choose a Doctor Type</label>
+                            <select class="form-select" id="doctor">
+                                <option selected disabled>Select Doctor</option>
+                                <option value="md">MD</option>
+                                <option value="gyno">Gynecologist</option>
+                                <option value="gastro">Gastroenterologist</option>
+                            </select>
+                        </div>
+
+                        <div class="mb-3">
+                            <label for="document" class="form-label">Upload Doctor Photo </label>
+                            <input type="file" class="form-control" id="document">
+                        </div>
+
+                        <div class="mb-3">
+                            <label for="document" class="form-label">Upload Doctor Verify Documents </label>
+                            <input type="file" class="form-control" id="document">
+                        </div>
+                        <div class="text-center">
+                            <button type="submit" class="btn btn-primary">Submit</button>
+                        </div>
+                    </form>
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <!-- Medical Data Modal -->
+    <div class="modal fade" id="viewMedicalDataModal" tabindex="-1" aria-labelledby="viewMedicalDataModalLabel"
+        aria-hidden="true">
+        <div class="modal-dialog modal-dialog-centered">
+            <div class="modal-content">
+                <div class="modal-header bg-primary text-white">
+                    <h5 class="modal-title" id="viewMedicalDataModalLabel">Medical Data</h5>
+                    <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
+                </div>
+                <div class="modal-body">
+                    <div id="medicalDataViewMode">
+                        <!-- Display mode -->
+                        <div class="mb-3">
+                            <p><strong>Patient ID:</strong> <span class="float-end" id="patientId">093</span></p>
+                            <p><strong>Blood Group:</strong> <span class="float-end" id="bloodGroup">A+</span></p>
+                            <p><strong>Height:</strong> <span class="float-end" id="height">213</span></p>
+                            <p><strong>Weight:</strong> <span class="float-end" id="weight">23</span></p>
+                            <p><strong>Blood Pressure (Sys/Dia):</strong> <span class="float-end"
+                                    id="bloodPressure">7/45</span></p>
+                            <p><strong>Blood Sugar (FA/PP) SpO2:</strong> <span class="float-end"
+                                    id="bloodSugar">89/09</span></p>
+                            <p><strong>SpO2:</strong> <span class="float-end" id="spo2">78</span></p>
+                        </div>
+                        <button type="button" class="btn btn-primary"
+                            onclick="toggleMedicalDataEditMode(true)">Edit</button>
+                    </div>
+                    <div id="medicalDataEditMode" style="display: none;">
+                        <!-- Edit mode -->
+                        <div class="row">
+                            <div class="col-md-6">
+                                <div class="mb-3">
+                                    <label for="editPatientId" class="form-label">Patient ID</label>
+                                    <input type="text" class="form-control" id="editPatientId" value="093">
+                                </div>
+                                <div class="mb-3">
+                                    <label for="editBloodGroup" class="form-label">Blood Group</label>
+                                    <input type="text" class="form-control" id="editBloodGroup" value="A+">
+                                </div>
+                                <div class="mb-3">
+                                    <label for="editHeight" class="form-label">Height</label>
+                                    <input type="text" class="form-control" id="editHeight" value="213">
+                                </div>
+                                <div class="mb-3">
+                                    <label for="editWeight" class="form-label">Weight</label>
+                                    <input type="text" class="form-control" id="editWeight" value="23">
+                                </div>
+                            </div>
+                            <div class="col-md-6">
+                                <div class="mb-3">
+                                    <label for="editBloodPressure" class="form-label">Blood Pressure (Sys/Dia)</label>
+                                    <input type="text" class="form-control" id="editBloodPressure" value="7/45">
+                                </div>
+                                <div class="mb-3">
+                                    <label for="editBloodSugar" class="form-label">Blood Sugar (FA/PP) SpO2</label>
+                                    <input type="text" class="form-control" id="editBloodSugar" value="89/09">
+                                </div>
+                                <div class="mb-3">
+                                    <label for="editSpo2" class="form-label">SpO2</label>
+                                    <input type="text" class="form-control" id="editSpo2" value="78">
+                                </div>
+                            </div>
+                        </div>
+                        <button type="button" class="btn btn-primary" onclick="saveMedicalDataEdit()">Save</button>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <!-- Contact Now Modal -->
+    <div class="modal fade" id="contactNowModal" tabindex="-1" aria-labelledby="contactNowModalLabel"
+        aria-hidden="true">
+        <div class="modal-dialog modal-dialog-centered">
+            <div class="modal-content">
+                <div class="modal-header bg-primary text-white"> <!-- Added bg-primary and text-white classes -->
+                    <h5 class="modal-title" id="contactNowModalLabel">Contact Now</h5>
+                    <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
+                </div>
+                <div class="modal-body">
+                    <div class="mb-3">
+                        <p><strong>Patient ID:</strong> <span id="contactPatientId"></span></p>
+                        <p><strong>Patient Name:</strong> <span id="contactPatientName"></span></p>
+                    </div>
+                    <hr>
+                    <div class="mb-3">
+                        <label for="chatMessage" class="form-label">Type your message to Patient:</label>
+                        <textarea class="form-control" id="chatMessage" placeholder="Type your message..."
+                            rows="3"></textarea>
+                    </div>
+                    <button type="button" class="btn btn-primary">Send</button>
+                </div>
+            </div>
+        </div>
+    </div>
+
+
+    <!-- Documentation Modal -->
+    <div class="modal fade" id="viewDocumentationModal" tabindex="-1" aria-labelledby="viewDocumentationModalLabel"
+        aria-hidden="true">
+        <div class="modal-dialog modal-dialog-centered modal-dialog-scrollable">
+            <div class="modal-content">
+                <div class="modal-header bg-primary">
+                    <h5 class="modal-title text-white" id="viewDocumentationModalLabel">Your Documentation</h5>
+                    <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
+                </div>
+                <div class="modal-body">
+                    <hr>
+                    <!-- Prescription Section -->
+                    <h6 class="mt-3">Your Prescription</h6>
+                    <div class="d-flex align-items-center mb-3">
+                        <embed src="" width="100%" height="500px">
+                    </div>
+                    <div class="mb-3">
+                        <p><strong>Updated by:</strong> <span id="doctorName"></span></p>
+                        <p><strong>Time:</strong> <span id="time"></span></p>
+                        <p><strong>Date:</strong> <span id="date"></span></p>
+                    </div>
+                    <hr>
+
+                    <!-- Discussion Section -->
+                    <h6>Your and Doctor Discussion</h6>
+                    <div class="mb-3">
+                        <!-- Add your voice recording player here -->
+                    </div>
+                    <hr>
+
+                    <!-- Test Report Section -->
+                    <h6>Your Test Report</h6>
+                    <div class="mb-3">
+                        <!-- Add your PDFs and upload/download functionality here -->
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+    <!-- End Documentation Modal -->
+
+    <div class="container">
+        <div class="row">
+            <div class="col-md-12">
+                <div class="table-container">
+                    <div class="table-history-heading text-center">Upcoming Appointments</div>
+                    <div class="row mt-3">
+                        <div class="col-md-8">
+                            <div class="input-group">
+                                <input type="text" class="form-control" placeholder="Search by Date / Doctor">
+                                <button class="btn btn-outline-secondary" type="button" id="button-addon2"><i
+                                        class="bi bi-search"></i></button>
+                            </div>
+                        </div>
+                    </div>
+                    <table class="table table-history-content mt-3">
+                        <thead>
+                            <tr>
+                                <th>Patient ID</th>
+                                <th>Date</th>
+                                <th>Time</th>
+                                <th>Patient Name</th>
+                                <th>Medical Data</th>
+                                <th>Documentation</th>
+                                <th>Contact Now</th>
+                            </tr>
+                        </thead>
+                        <tbody>
+                            {% for appointment in upcoming_appointments %}
+                            <tr>
+                                <td>{{ appointment.patient_id }}</td>
+                                <td>{{ appointment.date }}</td>
+                                <td>{{ appointment.time_slot }}</td>
+                                <td>{{ appointment.patient_name }}</td>
+                                <td>
+                                    <button class="btn btn-primary" data-bs-toggle="modal"
+                                        data-bs-target="#viewMedicalDataModal"
+                                        onclick="toggleMedicalDataEditMode(false)">
+                                        <i class="bi bi-file-earmark-text"></i> View
+                                    </button>
+                                </td>
+                                <td>
+                                    <button class="btn btn-primary" data-bs-toggle="modal"
+                                        data-bs-target="#viewDocumentationModal"><i class="bi bi-file-earmark-text"></i>
+                                        View</button>
+                                </td>
+                                <td>
+                                    <button class="btn btn-primary" data-bs-toggle="modal"
+                                        data-bs-target="#contactNowModal"
+                                        onclick="setContactPatientInfo('{{ appointment.patient_id }}', '{{ appointment.patient_name }}')">
+                                        <i class="bi bi-file-earmark-text"></i> Chat
+                                    </button>
+                                </td>
+                            </tr>
+                            {% endfor %}
+                        </tbody>
+                    </table>
+                    
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <footer class="text-center p-4">
+        <p>&copy; 2024 imMORTAL. All rights reserved.</p>
+    </footer>
+    <script>
+        // JavaScript for handling chat functionality
+        document.addEventListener("DOMContentLoaded", function () {
+            const chatMessages = document.getElementById('chatMessages');
+            const messageInput = document.getElementById('messageInput');
+            const sendMessageBtn = document.getElementById('sendMessageBtn');
+
+            sendMessageBtn.addEventListener('click', function () {
+                const message = messageInput.value.trim();
+                if (message !== '') {
+                    const messageElement = document.createElement('div');
+                    messageElement.textContent = message;
+                    chatMessages.appendChild(messageElement);
+                    messageInput.value = '';
+                    // Scroll to bottom of chat messages
+                    chatMessages.scrollTop = chatMessages.scrollHeight;
+                }
+            });
+        });
+    </script>
+
+    <script>
+        // Function to set patient information in the contact modal
+        function setContactPatientInfo(patientId, patientName) {
+            document.getElementById('contactPatientId').innerText = patientId;
+            document.getElementById('contactPatientName').innerText = patientName;
+        }
+    </script>
+
+    <script>
+        // Function to toggle between view mode and edit mode in medical data modal
+        function toggleMedicalDataEditMode(editMode) {
+            if (editMode) {
+                document.getElementById('medicalDataViewMode').style.display = 'none';
+                document.getElementById('medicalDataEditMode').style.display = 'block';
+            } else {
+                document.getElementById('medicalDataViewMode').style.display = 'block';
+                document.getElementById('medicalDataEditMode').style.display = 'none';
+            }
+        }
+
+        // Function to save medical data edit
+        function saveMedicalDataEdit() {
+            // Here you can add logic to save the edited data
+            // For now, let's just toggle back to view mode
+            toggleMedicalDataEditMode(false);
+        }
+
+        // Function to handle the edit button click
+        document.getElementById('editMedicalDataButton').addEventListener('click', function () {
+            toggleMedicalDataEditMode(true);
+        });
+    </script>
+    {% if success_popup %}
+    <script>
+        // Display a popup window indicating successful login
+        alert("Login successful!");
+    </script>
+    {% endif %}
+    <script src="https://cdn.jsdelivr.net/npm/@popperjs/core@2.11.6/dist/umd/popper.min.js"></script>
+    <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0-alpha1/dist/js/bootstrap.min.js"></script>
+</body>
+
+</html>

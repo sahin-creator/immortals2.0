@@ -1,0 +1,49 @@
+<div class="modal fade" id="exampleModal" tabindex="-1" aria-labelledby="exampleModalLabel" aria-hidden="true">
+    <div class="modal-dialog modal-dialog-centered">
+        <div class="modal-content">
+            <div class="modal-header bg-primary book-appointment">
+                <h5 class="modal-title" id="exampleModalLabel">Book Your Doctor Appointment</h5>
+                <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
+            </div>
+            <div class="modal-body">
+                <form action="/book_appointment" method="POST" enctype="multipart/form-data" onsubmit="handleSubmit(event)">
+                    <div class="mb-3">
+                        <label for="email" class="form-label">Email ID</label>
+                        <input type="email" class="form-control" id="email" name="email" placeholder="Enter your Email ID" required>
+                    </div>
+                
+                    <div class="mb-3">
+                        <label for="doctor" class="form-label">Choose a Doctor</label>
+                        <select class="form-select" id="doctor" name="doctor" required>
+                            <option selected disabled>Select Doctor</option>
+                            <option value="md">MD</option>
+                            <option value="gyno">Gynecologist</option>
+                            <option value="gastro">Gastroenterologist</option>
+                        </select>
+                    </div>
+                
+                    <div class="mb-3">
+                        <label for="date" class="form-label">Choose Date</label>
+                        <input type="date" class="form-control" id="date" name="date" required>
+                    </div>
+                    <div class="mb-3">
+                        <label for="time_slot" class="form-label">Choose Time Slots</label>
+                        <select class="form-select" id="time_slot" name="time_slot">
+                            <option selected disabled>Select Time Slot</option>
+                            <option value="7:00am - 10:00am">7:00am - 10:00am</option>
+                            <option value="11:00am - 2:00pm">11:00am - 2:00pm</option>
+                            <option value="3:00pm - 6:00pm">3:00pm - 6:00pm</option>
+                        </select>
+                    </div>
+                    <div class="mb-3">
+                        <label for="document" class="form-label">Upload document if any(must less than 2 MB)</label>
+                        <input type="file" class="form-control" id="document" name="document">
+                    </div>
+                    <div class="text-center">
+                        <button type="submit" class="btn btn-primary">Submit</button>
+                    </div>
+                </form>
+            </div>
+        </div>
+    </div>
+</div>
